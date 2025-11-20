@@ -1,0 +1,17 @@
+spring.application.name: market-data-service
+
+server:
+  port: 8081
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
+marketdata:
+  websocket-url: "wss://data-stream.binance.vision/ws/btcusdt@trade"
+  topic: "market-ticks"
