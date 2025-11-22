@@ -31,7 +31,9 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
 
   market-data-service:
-    build: ./market-data
+    build:
+      context: .
+      dockerfile: ./market-data/Dockerfile
     container_name: market-data-service
     depends_on:
       - kafka
@@ -42,7 +44,9 @@ services:
     restart: always
 
   strategy-engine-service:
-    build: ./strategy-engine
+    build:
+      context: .
+      dockerfile: ./strategy-engine/Dockerfile
     container_name: strategy-engine-service
     depends_on:
       - kafka
@@ -51,4 +55,18 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
     ports:
       - "8082:8082"
+    restart: always
+
+  risk-manager-service:
+    build:
+      context: .
+      dockerfile: ./risk-manager-service/Dockerfile
+    container_name: risk-manager-service
+    depends_on:
+      - kafka
+      - strategy-engine-service
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    ports:
+      - "8083:8083"
     restart: always

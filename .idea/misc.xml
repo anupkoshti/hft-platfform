@@ -6,6 +6,9 @@
       <list>
         <option value="$PROJECT_DIR$/market-data/pom.xml" />
         <option value="$PROJECT_DIR$/strategy-engine/pom.xml" />
+        <option value="$PROJECT_DIR$/common/pom.xml" />
+        <option value="$PROJECT_DIR$/risk-manager-service/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>

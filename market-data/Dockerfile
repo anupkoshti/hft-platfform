@@ -7,13 +7,23 @@ WORKDIR /app
 
 ENV SPRING_PROFILES_ACTIVE=docker
 
+# Build and install parent pom, then common module
+COPY pom.xml ./
+RUN mvn -N install
 
-# Copy pom and download dependencies in a cached layer
-COPY pom.xml .
+# Build and install common module
+COPY common/pom.xml ./common/pom.xml
+COPY common/src ./common/src
+WORKDIR /app/common
+RUN mvn clean install -DskipTests
+
+# Now build market-data service
+WORKDIR /app/market-data
+COPY market-data/pom.xml .
 RUN mvn dependency:go-offline -B
 
 # Copy the actual source code
-COPY src ./src
+COPY market-data/src ./src
 
 # Build the JAR
 RUN mvn clean package -DskipTests
@@ -26,7 +36,7 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # Copy the JAR from build stage
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/market-data/target/*.jar app.jar
 
 EXPOSE 8081
 

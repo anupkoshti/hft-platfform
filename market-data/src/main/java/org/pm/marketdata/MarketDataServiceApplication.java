@@ -19,9 +19,13 @@ public class MarketDataServiceApplication implements CommandLineRunner {
         SpringApplication.run(MarketDataServiceApplication.class, args);
     }
 
+    //“When the application starts, run the code inside run() automatically.”
+
     @Override
     public void run(String... args) {
         System.out.println("Starting Market Data Service...");
+//        Called automatically when the application starts
+//        Starts your WebSocket connection
         marketDataService.startStreaming();
     }
 }

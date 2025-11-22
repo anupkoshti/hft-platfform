@@ -1,8 +1,8 @@
 package org.pm.strategyengine.service;
 
 
-import org.pm.strategyengine.model.Tick;
-import org.pm.strategyengine.model.TradeSignal;
+import org.pm.common.model.Tick;
+import org.pm.common.model.TradeSignal;
 import org.pm.strategyengine.utils.SMAUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -66,6 +66,12 @@ public class StrategyService {
         else signal = "HOLD";
 
         TradeSignal tradeSignal = new TradeSignal(tick.getSymbol(), signal, tick.getPrice(), tick.getTimestamp());
+
+        // Validate signal before sending
+        if (tradeSignal == null || tradeSignal.getSymbol() == null || tradeSignal.getSignal() == null) {
+            System.err.println("Invalid trade signal created: " + tradeSignal);
+            return;
+        }
 
         System.out.printf("Sending signal to Kafka topic '%s': %s%n", signalsTopic, tradeSignal);
         
