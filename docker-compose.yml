@@ -70,3 +70,19 @@ services:
     ports:
       - "8083:8083"
     restart: always
+
+  order-execution-service:
+    build:
+      context: .
+      dockerfile: ./order-execution/Dockerfile
+    container_name: order-execution-service
+    depends_on:
+      kafka:
+        condition: service_started
+      risk-manager-service:
+        condition: service_started
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+    ports:
+      - "8090:8090"
+    restart: always

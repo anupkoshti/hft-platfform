@@ -1,6 +1,6 @@
 package org.pm.producer;
 
-import org.pm.model.ValidatedTrade;
+import org.pm.common.model.ValidatedTrade;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;

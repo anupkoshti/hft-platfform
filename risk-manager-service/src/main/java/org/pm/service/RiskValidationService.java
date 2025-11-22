@@ -1,7 +1,7 @@
 package org.pm.service;
 
 import org.pm.common.model.TradeSignal;
-import org.pm.model.ValidatedTrade;
+import org.pm.common.model.ValidatedTrade;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -26,21 +26,13 @@ public class RiskValidationService {
         
         // Skip validation for HOLD signals
         if ("HOLD".equals(signal.getSignal())) {
-            return ValidatedTrade.builder()
-                    .signal(signal)
-                    .valid(true)
-                    .reason("HOLD signal - no action required")
-                    .build();
+            return new ValidatedTrade(signal, true, "HOLD signal - no action required");
         }
 
         // Check if this is a duplicate signal (same as last one)
         String lastSignal = lastSignals.get(signal.getSymbol());
         if (signal.getSignal().equals(lastSignal)) {
-            return ValidatedTrade.builder()
-                    .signal(signal)
-                    .valid(false)
-                    .reason("Duplicate signal - already " + signal.getSignal())
-                    .build();
+            return new ValidatedTrade(signal, false, "Duplicate signal - already " + signal.getSignal());
         }
 
         // 1. Validate price is reasonable
@@ -90,20 +82,12 @@ public class RiskValidationService {
         System.out.println(String.format("✓ Trade validated: %s %s @ $%.2f | Position: $%.2f", 
             signal.getSignal(), signal.getSymbol(), signal.getPrice(), newPosition));
 
-        return ValidatedTrade.builder()
-                .signal(signal)
-                .valid(true)
-                .reason(String.format("OK - Position: $%.2f", newPosition))
-                .build();
+        return new ValidatedTrade(signal, true, String.format("OK - Position: $%.2f", newPosition));
     }
 
     private ValidatedTrade invalid(TradeSignal signal, String reason) {
         System.out.println("✗ Trade rejected: " + reason);
-        return ValidatedTrade.builder()
-                .signal(signal)
-                .valid(false)
-                .reason(reason)
-                .build();
+        return new ValidatedTrade(signal, false, reason);
     }
 
     // Simple rate limiter

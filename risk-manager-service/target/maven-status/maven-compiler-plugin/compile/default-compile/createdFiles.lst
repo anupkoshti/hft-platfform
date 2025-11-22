@@ -1,8 +1,6 @@
-org/pm/model/ValidatedTrade$ValidatedTradeBuilder.class
 org/pm/service/RiskValidationService.class
 org/pm/RiskManagerApplication.class
 org/pm/consumer/TradeSignalConsumer.class
 org/pm/config/KafkaConfig.class
-org/pm/model/ValidatedTrade.class
 org/pm/service/RiskValidationService$TradeCounter.class
 org/pm/producer/ValidatedTradeProducer.class

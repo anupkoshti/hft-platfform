@@ -1,6 +1,5 @@
 /Users/anupamkoshti/Documents/hft/hft-backend/risk-manager-service/src/main/java/org/pm/RiskManagerApplication.java
 /Users/anupamkoshti/Documents/hft/hft-backend/risk-manager-service/src/main/java/org/pm/config/KafkaConfig.java
 /Users/anupamkoshti/Documents/hft/hft-backend/risk-manager-service/src/main/java/org/pm/consumer/TradeSignalConsumer.java
-/Users/anupamkoshti/Documents/hft/hft-backend/risk-manager-service/src/main/java/org/pm/model/ValidatedTrade.java
 /Users/anupamkoshti/Documents/hft/hft-backend/risk-manager-service/src/main/java/org/pm/producer/ValidatedTradeProducer.java
 /Users/anupamkoshti/Documents/hft/hft-backend/risk-manager-service/src/main/java/org/pm/service/RiskValidationService.java

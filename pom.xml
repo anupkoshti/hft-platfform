@@ -25,6 +25,7 @@
         <module>market-data</module>
         <module>strategy-engine</module>
         <module>risk-manager-service</module>
+        <module>order-execution</module>
     </modules>
 
     <properties>
