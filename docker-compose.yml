@@ -86,3 +86,37 @@ services:
     ports:
       - "8090:8090"
     restart: always
+
+  postgres-portfolio:
+    image: postgres:15-alpine
+    container_name: postgres-portfolio
+    environment:
+      POSTGRES_DB: portfolio_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - portfolio-db-data:/var/lib/postgresql/data
+    restart: always
+
+  portfolio-service:
+    build:
+      context: .
+      dockerfile: ./portfolio-service/Dockerfile
+    container_name: portfolio-service
+    depends_on:
+      - kafka
+      - postgres-portfolio
+      - order-execution-service
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-portfolio:5432/portfolio_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "8084:8084"
+    restart: always
+
+volumes:
+  portfolio-db-data:

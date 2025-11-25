@@ -26,6 +26,7 @@
         <module>strategy-engine</module>
         <module>risk-manager-service</module>
         <module>order-execution</module>
+        <module>portfolio-service</module>
     </modules>
 
     <properties>
